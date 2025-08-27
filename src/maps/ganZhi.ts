@@ -137,8 +137,10 @@ export const SanHeFaYong = {
 export const SanXingYong = {
     "丑": "戌",
     "戌": "未",
+    "未": "戌",
     "寅": "巳",
     "巳": "申",
+    "申": "寅",
     "子": "卯",
     "卯": "子",
     "辰": "辰",

@@ -65,3 +65,4 @@ export const getNianMing = (time: Date, gender: number): LuNianResult => {
     }
     return result
 }
+// console.log(getLiuRenByDate(new Date("2025-08-27 13:00:00")))

@@ -534,7 +534,7 @@ export const getSanChuan = (siKe: SiKe, tiandipan: TianDiPan): SanChuan => {
             sanChuan.中传 = [zhong, "", "", ""]
             let mo = getFuYinNext(zhong)
             // 若自刑则取冲为末
-            mo = mo == zhong ? LiuChong[mo as keyof typeof LiuChong] : mo
+            mo = mo == ke1_shang ? LiuChong[zhong as keyof typeof LiuChong] : mo
             sanChuan.末传 = [mo, "", "", ""]
             return sanChuan
         } else {
@@ -545,7 +545,7 @@ export const getSanChuan = (siKe: SiKe, tiandipan: TianDiPan): SanChuan => {
             sanChuan.中传 = [zhong, "", "", ""]
             let mo = getFuYinNext(zhong)
             // 若自刑则取冲为末
-            mo = mo == zhong ? LiuChong[mo as keyof typeof LiuChong] : mo
+            mo = mo == ke3_shang ? LiuChong[zhong as keyof typeof LiuChong] : mo
             sanChuan.末传 = [mo, "", "", ""]
             return sanChuan
 
@@ -621,7 +621,7 @@ const getTongYinYang = (item1: string, item2: string, base: string): string => {
 }
 
 const getFuYinNext = (zhi: string) => {
-    if (zhi == "辰" || zhi == "亥" || zhi == "酉" || zhi == "午" || zhi == "未" || zhi == "申") {
+    if (zhi == "辰" || zhi == "亥" || zhi == "酉" || zhi == "午") {
         return zhi;
     }
     return SanXingYong[zhi as keyof typeof SanXingYong]

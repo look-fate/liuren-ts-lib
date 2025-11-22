@@ -5,6 +5,7 @@ import { zeiKe } from "./jiuZongMen/zeiKe"
 import { DiZhiArray, GanZhiYinYang, LiuChong, SanHeFaYong, SanXingYong, TianGanWuHe } from "src/maps/ganZhi"
 import { getShangShen, getTianJiang, getXiaShen } from "./siKe"
 import { YiMa } from "src/maps/ma"
+import  sanChuanData  from "src/sanchuan.json"
 
 export const getSanChuan = (siKe: SiKe, tiandipan: TianDiPan): SanChuan => {
     let sanChuan: SanChuan = {
@@ -31,6 +32,15 @@ export const getSanChuan = (siKe: SiKe, tiandipan: TianDiPan): SanChuan => {
     siKeArray.push(ke2_shang + ke2_xia)
     siKeArray.push(ke3_shang + ke3_xia)
     siKeArray.push(ke4_shang + ke4_xia)
+
+    const day = riGan + ke3_xia
+    const index = DiZhiArray.indexOf(ke1_shang)
+    const ganZhi = sanChuanData[day as keyof typeof sanChuanData][index].干支组合
+    sanChuan.课体 = sanChuanData[day as keyof typeof sanChuanData][index].格局
+    sanChuan.初传 = [ganZhi.substring(0, 1), "", "", ""]
+    sanChuan.中传 = [ganZhi.substring(1, 2), "", "", ""]
+    sanChuan.末传 = [ganZhi.substring(2, 3), "", "", ""]
+    return sanChuan
     /**
         *（一）、贼克法
         *四课中的天盘称为上神，地盘称为下神。上神克下神称为克。下神克上神称为贼。

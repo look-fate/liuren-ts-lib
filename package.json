@@ -28,17 +28,17 @@
     "typescript": "^5.8.3"
   },
   "scripts": {
-    "build": "yarn build:esm && yarn build:cjs && yarn build:types",
+    "build": "pnpm build:esm && pnpm build:cjs && pnpm build:types",
     "build:esm": "esbuild src/index.ts --bundle --platform=node --target=es2020 --format=esm --outfile=dist/esm/index.js --sourcemap=inline",
     "build:cjs": "esbuild src/index.ts --bundle --platform=node --target=es2020 --format=cjs --outfile=dist/cjs/index.js --sourcemap=inline",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
     "dev": "tsc -w",
-    "start": "yarn build && node --enable-source-maps dist/cjs/index.js",
+    "start": "pnpm build && node --enable-source-maps dist/cjs/index.js",
     "test": "jest",
     "ts": "ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",
     "fix": "eslint src/**/*.ts --fix",
-    "prepare": "yarn build"
+    "prepare": "pnpm build"
   },
   "exports": {
     ".": {

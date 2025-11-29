@@ -3,6 +3,7 @@ import { LiuRenResult, LuNianResult } from "./type";
 import { getDateByObj, getDateBySiZhu } from "./utils/date";
 import { getDunGan } from "./utils/dunGan";
 import { fillSanChuan, getSanChuan } from "./utils/sanChuan";
+import { getShenSha } from "./utils/shenSha";
 import { getSiKe } from "./utils/siKe";
 import { getTianDiPan } from "./utils/tianDiPan";
 export const getLiuRenByDate = (time: Date): LiuRenResult => {
@@ -12,12 +13,14 @@ export const getLiuRenByDate = (time: Date): LiuRenResult => {
     const siKe = getSiKe(date, tianDiPan)
     const dunGan = getDunGan(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
+    const shenSha = getShenSha(date)
     const result: LiuRenResult = {
         dateInfo: date,
         tiandipan: tianDiPan,
         siKe: siKe,
         dunGan: dunGan,
-        sanChuan: sanChuan
+        sanChuan: sanChuan,
+        shenSha: shenSha
     }
     return result
 }
@@ -28,12 +31,14 @@ export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour:
     const siKe = getSiKe(date, tianDiPan)
     const dunGan = getDunGan(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
+    const shenSha = getShenSha(date)
     const result: LiuRenResult = {
         dateInfo: date,
         tiandipan: tianDiPan,
         siKe: siKe,
         dunGan: dunGan,
-        sanChuan: sanChuan
+        sanChuan: sanChuan,
+        shenSha: shenSha
     }
     return result
 }
@@ -65,4 +70,3 @@ export const getNianMing = (time: Date, gender: number): LuNianResult => {
     }
     return result
 }
-console.log(getLiuRenByDate(new Date("2025-11-22 22:00:00")))

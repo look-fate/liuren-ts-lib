@@ -11,6 +11,16 @@ export interface LiuRenResult {
     siKe?: SiKe
     sanChuan?: SanChuan
     dunGan?: ShiErGongEx
+    shenSha?: ShenSha
+}
+export interface ShenSha {
+    riDe: string;
+    riLu: string;
+    shengQi: string;
+    siQi: string;
+    poSui: string;
+    sangMen: string;
+    diaoKe: string;
 }
 export interface TianDiPan {
     "地盘": ShiErGong,

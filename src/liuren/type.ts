@@ -30,15 +30,13 @@ export interface ShiErGongEx {
     "亥": string
 }
 
-export interface ShenSha {
-    riDe: string;
-    riLu: string;
-    shengQi: string;
-    siQi: string;
-    poSui: string;
-    sangMen: string;
-    diaoKe: string;
+export interface ShenShaItem {
+    name: string;
+    value: string;
+    description?: string;
 }
+
+export type ShenSha = ShenShaItem[];
 
 export interface TianDiPan {
     "地盘": ShiErGong,
@@ -68,4 +66,3 @@ export interface LiuRenResult {
     dunGan?: ShiErGongEx
     shenSha?: ShenSha
 }
-

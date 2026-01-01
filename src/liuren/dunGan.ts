@@ -1,7 +1,7 @@
-import { ShiErGongEx, TianDiPan, ShiErGong } from "src/type";
-import { DateInfo } from "./date";
-import { DiZhiArray, DiZhiIndex, DiZhiNumber } from "src/maps/ganZhi";
-import { TianGanArray } from "src/maps/ganZhi";
+import { ShiErGongEx, TianDiPan, ShiErGong } from "./type";
+import { DateInfo } from "../common/date";
+import { DiZhiArray, DiZhiIndex, DiZhiNumber } from "../maps/ganZhi";
+import { TianGanArray } from "../maps/ganZhi";
 /**
  * 根据日旬所配又称为旬遁
  */

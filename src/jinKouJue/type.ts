@@ -1,4 +1,4 @@
-import { DateInfo } from "../utils/date";
+import { DateInfo } from "../common/date";
 
 export interface Position {
     name: string; // 名称，如 甲、贵人、登明、子

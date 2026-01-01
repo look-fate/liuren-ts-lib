@@ -1,6 +1,6 @@
-import { JiGong } from "src/maps/jiGong";
-import { SiKe, TianDiPan } from "src/type"
-import { DateInfo } from "./date";
+import { JiGong } from "../maps/jiGong";
+import { SiKe, TianDiPan } from "./type"
+import { DateInfo } from "../common/date";
 
 export const getSiKe = (date: DateInfo,tianDiPan: TianDiPan):SiKe => {
     const siKe: SiKe = {

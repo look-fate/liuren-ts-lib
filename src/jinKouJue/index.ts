@@ -1,4 +1,4 @@
-import { DateInfo, getDateByObj } from "../utils/date";
+import { DateInfo, getDateByObj } from "../common/date";
 import { DiZhiArray, DiZhiNumber, TianGanArray, TianGanNumber } from "../maps/ganZhi";
 import { YueJiang, YueJiangName } from "../maps/yueJiang";
 import { YangGui, YinGui, YinYang, ShunNi, ShenJiangArray } from "../maps/shenJiang";

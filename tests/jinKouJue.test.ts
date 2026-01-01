@@ -1,5 +1,5 @@
 import { getJinKouJue } from "../src/jinKouJue";
-import { getDateByObj } from "../src/utils/date";
+import { getDateByObj } from "../src/common/date";
 
 describe('JinKouJue', () => {
   it('should calculate correct SiWei for a given date and DiFen', () => {

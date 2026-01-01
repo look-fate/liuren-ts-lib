@@ -1,15 +1,25 @@
 import sixtyJiaZi from "./maps/sixtyJiaZi";
-import { LiuRenResult, LuNianResult } from "./type";
-import { getDateByObj, getDateBySiZhu } from "./utils/date";
-import { getDunGan } from "./utils/dunGan";
-import { fillSanChuan, getSanChuan } from "./utils/sanChuan";
-import { getShenSha } from "./utils/shenSha";
-import { getSiKe } from "./utils/siKe";
-import { getTianDiPan } from "./utils/tianDiPan";
+import { LiuRenResult, LuNianResult } from "./types";
+import { getDateByObj, getDateBySiZhu } from "./common/date";
+import { getDunGan } from "./liuren/dunGan";
+import { fillSanChuan, getSanChuan } from "./liuren/sanChuan";
+import { getShenSha } from "./liuren/shenSha";
+import { getSiKe } from "./liuren/siKe";
+import { getTianDiPan } from "./liuren/tianDiPan";
 
 // 导出金口诀相关
 export * from "./jinKouJue";
-export * from "./jinKouJue/type";
+
+// 导出大六壬相关
+export * from "./liuren/tianDiPan";
+export * from "./liuren/siKe";
+export * from "./liuren/sanChuan";
+export * from "./liuren/dunGan";
+export * from "./liuren/shenSha";
+
+// 导出通用工具
+export * from "./common/date";
+export * from "./types";
 
 export const getLiuRenByDate = (time: Date): LiuRenResult => {
     const date = getDateByObj(time)

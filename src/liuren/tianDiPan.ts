@@ -1,7 +1,7 @@
-import { DiZhiArray } from "src/maps/ganZhi";
-import { DateInfo } from "./date";
-import { TianDiPan } from "src/type";
-import { ShenJiangArray, ShunNi, YangGui, YinGui, YinYang } from "src/maps/shenJiang";
+import { DiZhiArray } from "../maps/ganZhi";
+import { DateInfo } from "../common/date";
+import { TianDiPan } from "./type";
+import { ShenJiangArray, ShunNi, YangGui, YinGui, YinYang } from "../maps/shenJiang";
 /**
  * 月将加在占时的时辰之上，然后将十二地支按顺时针依次排列在各地盘地支之上
  * 

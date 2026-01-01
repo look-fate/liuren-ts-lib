@@ -1,6 +1,6 @@
 import { riDe, riLu, ShengQi, SiQi, PoSui } from "../maps/shensha";
-import { DateInfo } from "./date";
-import { ShenSha } from "../type";
+import { DateInfo } from "../common/date";
+import { ShenSha } from "./type";
 
 export const getShenSha = (date: DateInfo): ShenSha => {
     const baziArr = date.bazi.split(" ");

@@ -1,4 +1,4 @@
-import { SanChuan, ShiErGongEx, TianDiPan } from "src/type";
+import { SanChuan, ShiErGongEx, TianDiPan } from "../type";
 import { getGanZhi2Relation, getLiuQin } from "../sanChuan";
 import { getGongIndex } from "../tianDiPan";
 import { getShangShen } from "../siKe";

@@ -1,11 +1,11 @@
-import { JiGong } from "src/maps/jiGong"
-import { LiuQin, Relation, WuXing } from "src/maps/wuXing"
-import { SanChuan, ShiErGong, ShiErGongEx, SiKe, TianDiPan } from "src/type"
+import { JiGong } from "../maps/jiGong"
+import { LiuQin, Relation, WuXing } from "../maps/wuXing"
+import { SanChuan, ShiErGong, ShiErGongEx, SiKe, TianDiPan } from "./type"
 import { zeiKe } from "./jiuZongMen/zeiKe"
-import { DiZhiArray, GanZhiYinYang, LiuChong, SanHeFaYong, SanXingYong, TianGanWuHe } from "src/maps/ganZhi"
+import { DiZhiArray, GanZhiYinYang, LiuChong, SanHeFaYong, SanXingYong, TianGanWuHe } from "../maps/ganZhi"
 import { getShangShen, getTianJiang, getXiaShen } from "./siKe"
-import { YiMa } from "src/maps/ma"
-import  sanChuanData  from "src/sanchuan.json"
+import { YiMa } from "../maps/ma"
+import  sanChuanData  from "../sanchuan.json"
 
 export const getSanChuan = (siKe: SiKe, tiandipan: TianDiPan): SanChuan => {
     let sanChuan: SanChuan = {

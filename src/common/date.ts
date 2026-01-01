@@ -1,7 +1,7 @@
 import { EightChar, LunarHour, SixtyCycle, SolarDay } from "tyme4ts"
-import { DingMa, TianMa, YiMa } from "src/maps/ma";
-import { LiuHe } from "src/maps/ganZhi";
-import { YueJiang } from "src/maps/yueJiang";
+import { DingMa, TianMa, YiMa } from "../maps/ma";
+import { LiuHe } from "../maps/ganZhi";
+import { YueJiang } from "../maps/yueJiang";
 /**
         "date": "2025年07月25日 10时13分",
         "bazi": "乙巳 癸未 乙未 辛巳",

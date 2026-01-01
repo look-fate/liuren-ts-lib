@@ -1,5 +1,4 @@
-import { getJinKouJue } from "../src/jinKouJue";
-import { getDateByObj } from "../src/common/date";
+import { getJinKouJue, getJinKouJueBySiZhu } from "../src/index";
 
 describe('JinKouJue', () => {
   it('should calculate correct SiWei for a given date and DiFen', () => {
@@ -67,5 +66,26 @@ describe('JinKouJue', () => {
     
     // 贵神预期：青龙
     expect(result.siWei.guiShen.name).toBe("青龙");
+  });
+
+  it('should work with getJinKouJueBySiZhu', () => {
+    // 2025年7月25日 10时13分
+    // 八字：乙巳 癸未 乙未 辛巳
+    // 使用四柱调用
+    // 注意：这里的年、月、日、时参数是干支字符串
+    // 实际上 getDateBySiZhu 接受的是干支
+    
+    const year = "乙巳";
+    const month = "癸未";
+    const day = "乙未";
+    const hour = "辛巳";
+    const diFen = "子";
+    
+    const result = getJinKouJueBySiZhu(year, month, day, hour, diFen);
+    
+    // 验证部分属性
+    expect(result.date.bazi).toContain("乙未");
+    expect(result.siWei.renYuan.name).toBe("丙");
+    expect(result.siWei.diFen.name).toBe("子");
   });
 });

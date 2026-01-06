@@ -7,7 +7,7 @@ describe("LiuRen and JinKouJue Tests", () => {
     });
 
     it("should return the jinkoujue by date", () => {
-        const result = getJinKouJueByDate(new Date(), "子");
+        const result = getJinKouJueByDate(new Date(), "寅");
         console.log("JinKouJue Result:", JSON.stringify(result, null, 2));
     });
 });

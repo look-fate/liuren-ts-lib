@@ -28,7 +28,20 @@ const createMockResult = (monthBranch: string, dayGanZhi: string, lesson: { ren:
             jiangShen: { name: "Jiang", ganZhi: lesson.jiang, wuXing: "" },
             diFen: { name: lesson.di, ganZhi: lesson.di, wuXing: "" }
         },
-        shenSha: []
+        shenSha: [],
+        dongYao: {
+            type: '无',
+            relationship: '无生克关系',
+            description: '人元与地分无明显生克关系',
+            isAuspicious: false
+        },
+        yongShen: {
+            type: '将神',
+            position: { name: "Jiang", ganZhi: lesson.jiang, wuXing: "" },
+            principle: '无克则取将',
+            relationship: '无明显生克关系',
+            description: 'Mock YongShen for testing'
+        }
     };
 };
 

@@ -418,4 +418,4 @@ pnpm fix
 
 ---
 
-由 [ai.letfate.com](https://ai.letfate.com) 提供的 技术支持。 
+由 [www.lookfate.com](https://www.lookfate.com/) 提供的 技术支持。 

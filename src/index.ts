@@ -5,6 +5,7 @@ import { getDunGan, getChuJian, getFuJian } from "./liuren/dunGan";
 import { getJianChu } from "./liuren/jianChu";
 import { fillSanChuan, getSanChuan } from "./liuren/sanChuan";
 import { getShenSha } from "./liuren/shenSha";
+import { getYinYangGuiRen } from "./liuren/yinYangGuiRen";
 import { getSiKe } from "./liuren/siKe";
 import { getTianDiPan } from "./liuren/tianDiPan";
 import { getJinKouJue, getJinKouJueByDateInfo } from "./jinKouJue";
@@ -19,6 +20,7 @@ export * from "./liuren/sanChuan";
 export * from "./liuren/dunGan";
 export * from "./liuren/jianChu";
 export * from "./liuren/shenSha";
+export * from "./liuren/yinYangGuiRen";
 
 // 导出通用工具
 export * from "./common/date";
@@ -33,6 +35,7 @@ export const getLiuRenByDate = (time: Date): LiuRenResult => {
     const jianChu = getJianChu(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
     const shenSha = getShenSha(date)
+    const yinYangGuiRen = getYinYangGuiRen(date, tianDiPan)
     const chuJian = getChuJian(date)
     const fuJian = getFuJian(date)
     const result: LiuRenResult = {
@@ -44,7 +47,8 @@ export const getLiuRenByDate = (time: Date): LiuRenResult => {
         fuJian: fuJian,
         jianChu: jianChu,
         sanChuan: sanChuan,
-        shenSha: shenSha
+        shenSha: shenSha,
+        yinYangGuiRen: yinYangGuiRen
     }
     return result
 }
@@ -57,6 +61,7 @@ export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour:
     const jianChu = getJianChu(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
     const shenSha = getShenSha(date)
+    const yinYangGuiRen = getYinYangGuiRen(date, tianDiPan)
     const chuJian = getChuJian(date)
     const fuJian = getFuJian(date)
     const result: LiuRenResult = {
@@ -68,7 +73,8 @@ export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour:
         fuJian: fuJian,
         jianChu: jianChu,
         sanChuan: sanChuan,
-        shenSha: shenSha
+        shenSha: shenSha,
+        yinYangGuiRen: yinYangGuiRen
     }
     return result
 }

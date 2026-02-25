@@ -38,6 +38,11 @@ export interface ShenShaItem {
 
 export type ShenSha = ShenShaItem[];
 
+export interface YinYangGuiRen {
+    阳贵人: ShiErGong;  // 阳贵人天将
+    阴贵人: ShiErGong;  // 阴贵人天将
+}
+
 export interface TianDiPan {
     "地盘": ShiErGong,
     "天盘": ShiErGong,
@@ -68,4 +73,5 @@ export interface LiuRenResult {
     fuJian?: ShiErGongEx
     jianChu?: ShiErGongEx
     shenSha?: ShenSha
+    yinYangGuiRen?: YinYangGuiRen
 }

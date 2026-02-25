@@ -2,6 +2,7 @@ import sixtyJiaZi from "./maps/sixtyJiaZi";
 import { JinKouJueResult, LiuRenResult, LuNianResult } from "./types";
 import { getDateByObj, getDateBySiZhu } from "./common/date";
 import { getDunGan } from "./liuren/dunGan";
+import { getJianChu } from "./liuren/jianChu";
 import { fillSanChuan, getSanChuan } from "./liuren/sanChuan";
 import { getShenSha } from "./liuren/shenSha";
 import { getSiKe } from "./liuren/siKe";
@@ -16,6 +17,7 @@ export * from "./liuren/tianDiPan";
 export * from "./liuren/siKe";
 export * from "./liuren/sanChuan";
 export * from "./liuren/dunGan";
+export * from "./liuren/jianChu";
 export * from "./liuren/shenSha";
 
 // 导出通用工具
@@ -28,6 +30,7 @@ export const getLiuRenByDate = (time: Date): LiuRenResult => {
     const tianDiPan = getTianDiPan(date)
     const siKe = getSiKe(date, tianDiPan)
     const dunGan = getDunGan(date, tianDiPan)
+    const jianChu = getJianChu(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
     const shenSha = getShenSha(date)
     const result: LiuRenResult = {
@@ -35,6 +38,7 @@ export const getLiuRenByDate = (time: Date): LiuRenResult => {
         tiandipan: tianDiPan,
         siKe: siKe,
         dunGan: dunGan,
+        jianChu: jianChu,
         sanChuan: sanChuan,
         shenSha: shenSha
     }
@@ -46,6 +50,7 @@ export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour:
     const tianDiPan = getTianDiPan(date)
     const siKe = getSiKe(date, tianDiPan)
     const dunGan = getDunGan(date, tianDiPan)
+    const jianChu = getJianChu(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
     const shenSha = getShenSha(date)
     const result: LiuRenResult = {
@@ -53,6 +58,7 @@ export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour:
         tiandipan: tianDiPan,
         siKe: siKe,
         dunGan: dunGan,
+        jianChu: jianChu,
         sanChuan: sanChuan,
         shenSha: shenSha
     }

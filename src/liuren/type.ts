@@ -64,6 +64,8 @@ export interface LiuRenResult {
     siKe?: SiKe
     sanChuan?: SanChuan
     dunGan?: ShiErGongEx
+    chuJian?: ShiErGongEx
+    fuJian?: ShiErGongEx
     jianChu?: ShiErGongEx
     shenSha?: ShenSha
 }

@@ -1,7 +1,7 @@
 import sixtyJiaZi from "./maps/sixtyJiaZi";
 import { JinKouJueResult, LiuRenResult, LuNianResult } from "./types";
 import { getDateByObj, getDateBySiZhu } from "./common/date";
-import { getDunGan } from "./liuren/dunGan";
+import { getDunGan, getChuJian, getFuJian } from "./liuren/dunGan";
 import { getJianChu } from "./liuren/jianChu";
 import { fillSanChuan, getSanChuan } from "./liuren/sanChuan";
 import { getShenSha } from "./liuren/shenSha";
@@ -33,11 +33,15 @@ export const getLiuRenByDate = (time: Date): LiuRenResult => {
     const jianChu = getJianChu(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
     const shenSha = getShenSha(date)
+    const chuJian = getChuJian(date)
+    const fuJian = getFuJian(date)
     const result: LiuRenResult = {
         dateInfo: date,
         tiandipan: tianDiPan,
         siKe: siKe,
         dunGan: dunGan,
+        chuJian: chuJian,
+        fuJian: fuJian,
         jianChu: jianChu,
         sanChuan: sanChuan,
         shenSha: shenSha
@@ -53,11 +57,15 @@ export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour:
     const jianChu = getJianChu(date, tianDiPan)
     const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
     const shenSha = getShenSha(date)
+    const chuJian = getChuJian(date)
+    const fuJian = getFuJian(date)
     const result: LiuRenResult = {
         dateInfo: date,
         tiandipan: tianDiPan,
         siKe: siKe,
         dunGan: dunGan,
+        chuJian: chuJian,
+        fuJian: fuJian,
         jianChu: jianChu,
         sanChuan: sanChuan,
         shenSha: shenSha

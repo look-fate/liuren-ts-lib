@@ -79,8 +79,6 @@ console.log(result);
 // - diFen: 地分
 // - siWei: 四位（人元、贵神、将神、地分）
 // - shenSha: 神煞列表
-// - dongYao: 动爻信息（五动类型、生克关系等）
-// - yongShen: 用神信息（类型、取用原则等）
 ```
 
 #### 使用四柱干支
@@ -260,8 +258,6 @@ interface JinKouJueResult {
     diFen: string;            // 地分
     siWei: SiWei;             // 四位（人元、贵神、将神、地分）
     shenSha: ShenShaInfo[];   // 神煞列表
-    dongYao: DongYaoInfo;     // 动爻信息
-    yongShen: YongShenInfo;   // 用神信息
 }
 ```
 
@@ -291,32 +287,6 @@ interface Position {
 }
 ```
 
-### DongYaoInfo
-
-动爻信息（五动）。
-
-```typescript
-interface DongYaoInfo {
-    type: WuDongType;        // 五动类型：'贼动' | '妻动' | '官动' | '父动' | '兄动' | '无'
-    relationship: string;    // 生克关系
-    description: string;     // 含义说明
-    isAuspicious: boolean;   // 是否吉利
-}
-```
-
-### YongShenInfo
-
-用神信息。
-
-```typescript
-interface YongShenInfo {
-    type: YongShenType;      // 用神类型：'贵神' | '将神'
-    position: Position;      // 用神的位置信息
-    principle: string;       // 取用原则
-    relationship: string;    // 与人元的关系
-    description: string;     // 说明
-}
-```
 
 ### ShenShaInfo
 

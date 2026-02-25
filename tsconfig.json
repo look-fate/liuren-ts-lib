@@ -16,7 +16,7 @@
     "strictNullChecks": true,
 
     /* 模块解析选项 */
-    "moduleResolution": "node", // 模块解析策略
+    "moduleResolution": "bundler", // 现代模块解析策略，与 esbuild 行为一致
     "baseUrl": ".", // 解析非相对模块的基地址
     "esModuleInterop": true, // 允许混合使用 CommonJS 和 ES Modules
     "resolveJsonModule": true,
@@ -28,6 +28,10 @@
   "include": ["src"], // 指定需要编译的文件夹
   "exclude": ["node_modules", "dist", "tests"], // 指定需要排除的文件夹
   "ts-node": {
-    "esm": true
+    "esm": true,
+    "compilerOptions": {
+      "module": "nodenext",
+      "moduleResolution": "nodenext"
+    }
   }
 }

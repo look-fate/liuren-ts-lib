@@ -1,5 +1,5 @@
 import sixtyJiaZi from "./maps/sixtyJiaZi";
-import { JinKouJueResult, LiuRenResult, LuNianResult } from "./types";
+import { LiuRenResult, LuNianResult } from "./types";
 import { getDateByObj, getDateBySiZhu } from "./common/date";
 import { getDunGan, getChuJian, getFuJian } from "./liuren/dunGan";
 import { getJianChu } from "./liuren/jianChu";
@@ -8,10 +8,6 @@ import { getShenSha } from "./liuren/shenSha";
 import { getYinYangGuiRen } from "./liuren/yinYangGuiRen";
 import { getSiKe } from "./liuren/siKe";
 import { getTianDiPan } from "./liuren/tianDiPan";
-import { getJinKouJue, getJinKouJueByDateInfo } from "./jinKouJue";
-
-// 导出金口诀相关
-export * from "./jinKouJue";
 
 // 导出大六壬相关
 export * from "./liuren/tianDiPan";
@@ -105,15 +101,4 @@ export const getNianMing = (time: Date, gender: number): LuNianResult => {
         luNian: luNian
     }
     return result
-}
-
-// 金口诀函数封装
-export const getJinKouJueByDate = (time: Date, diFen: string): JinKouJueResult => {
-    const dateInfo = getDateByObj(time);
-    return getJinKouJueByDateInfo(dateInfo, diFen);
-}
-
-export const getJinKouJueBySiZhu = (year: string, month: string, day: string, hour: string, diFen: string): JinKouJueResult => {
-    const dateInfo = getDateBySiZhu(year, month, day, hour);
-    return getJinKouJueByDateInfo(dateInfo, diFen);
 }

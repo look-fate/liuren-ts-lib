@@ -5,12 +5,11 @@
 ![size](https://img.shields.io/github/repo-size/let-fate/liuren-ts-lib)
 ![last commit](https://img.shields.io/github/last-commit/let-fate/liuren-ts-lib)
 
-一个使用 TypeScript 编写的，基于 [tyme4ts](https://github.com/6tail/tyme4ts) 的六壬神课与金口诀 TypeScript 库。
+一个使用 TypeScript 编写的，基于 [tyme4ts](https://github.com/6tail/tyme4ts) 的大六壬 TypeScript 库。
 
 ## ✨ 特性
 
 -   **大六壬排盘**：支持完整的大六壬排盘，包括天地盘、四课、三传、遁干、神煞等
--   **金口诀排盘**：支持金口诀起课，包括四位（人元、贵神、将神、地分）、用神、动爻、神煞等
 -   **虚岁流年**：根据出生日期和性别计算流年
 -   **完整的 TypeScript 支持**：提供完整的类型定义
 -   **日期转换工具**：支持公历日期和四柱干支之间的转换
@@ -58,36 +57,6 @@ import { getLiuRenBySiZhu } from 'liuren-ts-lib';
 
 // 直接使用四柱干支排盘
 const result = getLiuRenBySiZhu('甲子', '丙寅', '戊辰', '庚午');
-
-console.log(result);
-```
-
-### 金口诀排盘
-
-#### 使用 Date 对象
-
-```typescript
-import { getJinKouJueByDate } from 'liuren-ts-lib';
-
-// 地分为起课的关键要素，这里使用"子"作为示例
-const diFen = '子';
-const result = getJinKouJueByDate(new Date(), diFen);
-
-console.log(result);
-// 输出包含：
-// - date: 日期信息
-// - diFen: 地分
-// - siWei: 四位（人元、贵神、将神、地分）
-// - shenSha: 神煞列表
-```
-
-#### 使用四柱干支
-
-```typescript
-import { getJinKouJueBySiZhu } from 'liuren-ts-lib';
-
-const diFen = '子';
-const result = getJinKouJueBySiZhu('甲子', '丙寅', '戊辰', '庚午', diFen);
 
 console.log(result);
 ```
@@ -149,29 +118,6 @@ console.log(dateInfo2.bazi); // 八字
 - `hour`: string - 时柱干支，如 "庚午"
 
 **返回值**: `LiuRenResult` - 包含完整的六壬排盘结果
-
-#### `getJinKouJueByDate(time: Date, diFen: string): JinKouJueResult`
-
-使用 Date 对象进行金口诀起课。
-
-**参数**:
-- `time`: Date - 需要起课的日期时间
-- `diFen`: string - 地分（十二地支之一），如 "子"、"丑"等
-
-**返回值**: `JinKouJueResult` - 包含完整的金口诀起课结果
-
-#### `getJinKouJueBySiZhu(year: string, month: string, day: string, hour: string, diFen: string): JinKouJueResult`
-
-使用四柱干支进行金口诀起课。
-
-**参数**:
-- `year`: string - 年柱干支
-- `month`: string - 月柱干支
-- `day`: string - 日柱干支
-- `hour`: string - 时柱干支
-- `diFen`: string - 地分（十二地支之一）
-
-**返回值**: `JinKouJueResult` - 包含完整的金口诀起课结果
 
 #### `getNianMing(time: Date, gender: number): LuNianResult`
 
@@ -248,60 +194,6 @@ interface SanChuan {
 }
 ```
 
-### JinKouJueResult
-
-金口诀起课结果。
-
-```typescript
-interface JinKouJueResult {
-    date: DateInfo;           // 日期信息
-    diFen: string;            // 地分
-    siWei: SiWei;             // 四位（人元、贵神、将神、地分）
-    shenSha: ShenShaInfo[];   // 神煞列表
-}
-```
-
-### SiWei
-
-金口诀四位信息。
-
-```typescript
-interface SiWei {
-    renYuan: Position;    // 人元（干）
-    guiShen: Position;    // 贵神（神）
-    jiangShen: Position;  // 将神（将）
-    diFen: Position;      // 地分（方）
-}
-```
-
-### Position
-
-位置信息，包含名称、干支、五行等。
-
-```typescript
-interface Position {
-    name: string;              // 名称
-    ganZhi: string;            // 对应的干支/地支
-    wuXing: string;            // 五行
-    wangXiangXiuQiu?: string;  // 旺相休囚死状态
-}
-```
-
-
-### ShenShaInfo
-
-神煞信息。
-
-```typescript
-interface ShenShaInfo {
-    name: string;           // 神煞名称
-    value: string;          // 触发神煞的干支
-    position: string[];     // 所在位置
-    description: string;    // 作用说明
-    type: '吉' | '凶';     // 吉凶属性
-}
-```
-
 ## 🛠️ 开发
 
 ### 克隆仓库
@@ -370,7 +262,6 @@ pnpm fix
 
 - [tyme4ts](https://github.com/6tail/tyme4ts) - 强大的日历工具库
 - [六壬基础知识](https://baike.baidu.com/item/大六壬)
-- [金口诀基础知识](https://baike.baidu.com/item/金口诀)
 
 ## 📜 脚本
 

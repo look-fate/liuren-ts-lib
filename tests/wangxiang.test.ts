@@ -1,4 +1,4 @@
-import { getWangXiangXiuQiu, getYueLingWuXing } from "../src/jinKouJue/index";
+import { getWangXiangXiuQiu, getYueLingWuXing } from "../src/maps/wuXing";
 
 describe('WangXiangXiuQiu', () => {
   describe('getYueLingWuXing', () => {

@@ -75,3 +75,9 @@ export interface LiuRenResult {
     shenSha?: ShenSha
     yinYangGuiRen?: YinYangGuiRen
 }
+
+export interface LuNianResult {
+    year: string;
+    luNian: string;
+    gender: string;
+}

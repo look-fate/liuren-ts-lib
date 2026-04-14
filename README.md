@@ -2,8 +2,8 @@
 
 ![NPM Version](https://img.shields.io/npm/v/liuren-ts-lib)
 ![License](https://img.shields.io/npm/l/liuren-ts-lib)
-![size](https://img.shields.io/github/repo-size/let-fate/liuren-ts-lib)
-![last commit](https://img.shields.io/github/last-commit/let-fate/liuren-ts-lib)
+![size](https://img.shields.io/github/repo-size/look-fate/liuren-ts-lib)
+![last commit](https://img.shields.io/github/last-commit/look-fate/liuren-ts-lib)
 
 一个使用 TypeScript 编写的，基于 [tyme4ts](https://github.com/6tail/tyme4ts) 的大六壬 TypeScript 库。
 
@@ -147,12 +147,16 @@ console.log(dateInfo2.bazi); // 八字
 
 ```typescript
 interface LiuRenResult {
-    dateInfo?: DateInfo;      // 日期信息
-    tiandipan?: TianDiPan;    // 天地盘
-    siKe?: SiKe;              // 四课
-    sanChuan?: SanChuan;      // 三传
-    dunGan?: ShiErGongEx;     // 遁干
-    shenSha?: ShenSha;        // 神煞
+    dateInfo?: DateInfo;            // 日期信息
+    tiandipan?: TianDiPan;          // 天地盘
+    siKe?: SiKe;                    // 四课
+    sanChuan?: SanChuan;            // 三传
+    dunGan?: ShiErGongEx;           // 遁干
+    chuJian?: ShiErGongEx;          // 初建（日干五子元遁）
+    fuJian?: ShiErGongEx;           // 复建（时干五子元遁）
+    jianChu?: ShiErGongEx;          // 十二建除
+    shenSha?: ShenSha;              // 神煞
+    yinYangGuiRen?: YinYangGuiRen;  // 阴阳贵人天将盘
 }
 ```
 
@@ -199,7 +203,7 @@ interface SanChuan {
 ### 克隆仓库
 
 ```bash
-git clone https://github.com/let-fate/liuren-ts-lib.git
+git clone https://github.com/look-fate/liuren-ts-lib.git
 cd liuren-ts-lib
 ```
 
@@ -221,11 +225,6 @@ pnpm dev
 ```bash
 # 构建所有格式（ESM、CJS、Types）
 pnpm build
-
-# 单独构建
-pnpm build:esm   # 构建 ESM 格式
-pnpm build:cjs   # 构建 CJS 格式
-pnpm build:types # 生成类型声明文件
 ```
 
 ### 测试
@@ -244,10 +243,6 @@ pnpm lint
 pnpm fix
 ```
 
-## 📝 示例项目
-
-查看 [examples](./examples) 目录获取更多使用示例（如果有的话）。
-
 ## 🤝 贡献
 
 欢迎贡献代码、报告问题或提出新功能建议！
@@ -263,17 +258,9 @@ pnpm fix
 - [tyme4ts](https://github.com/6tail/tyme4ts) - 强大的日历工具库
 - [六壬基础知识](https://baike.baidu.com/item/大六壬)
 
-## 📜 脚本
-
--   `pnpm build`: 编译 TypeScript 代码。
--   `pnpm dev`: 监听文件变化并自动编译。
--   `pnpm test`: 运行测试。
--   `pnpm lint`: 检查代码风格。
--   `pnpm fix`: 自动修复代码风格问题。
-
 ## 📄 版权与协议
 
-本仓库代码遵循 [Apache 2.0](https://github.com/let-fate/liuren-ts-lib/blob/main/LICENSE) 协议。
+本仓库代码遵循 [Apache 2.0](https://github.com/look-fate/liuren-ts-lib/blob/main/LICENSE) 协议。
 
 **本项目仅供个人学习和研究使用，严禁用于任何商业用途。**
 

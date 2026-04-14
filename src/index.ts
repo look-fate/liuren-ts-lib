@@ -1,5 +1,5 @@
 import sixtyJiaZi from "./maps/sixtyJiaZi";
-import { LiuRenResult, LuNianResult } from "./types";
+import { LiuRenResult, LuNianResult } from "./liuren/type";
 import { getDateByObj, getDateBySiZhu } from "./common/date";
 import { getDunGan, getChuJian, getFuJian } from "./liuren/dunGan";
 import { getJianChu } from "./liuren/jianChu";
@@ -20,7 +20,7 @@ export * from "./liuren/yinYangGuiRen";
 
 // 导出通用工具
 export * from "./common/date";
-export * from "./types";
+export * from "./liuren/type";
 
 export const getLiuRenByDate = (time: Date): LiuRenResult => {
     const date = getDateByObj(time)

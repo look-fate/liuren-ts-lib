@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 concurrency:
   group: npm-publish
@@ -31,9 +32,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           registry-url: https://registry.npmjs.org/
           cache: pnpm
+
+      - run: npm install -g npm@11.5.1
 
       - name: Read package metadata
         id: package
@@ -72,23 +75,5 @@ jobs:
       - run: pnpm build
         if: steps.npm-version.outputs.exists != 'true'
 
-      - name: Configure npm authentication
-        if: steps.npm-version.outputs.exists != 'true'
-        run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "Missing npm token. Add NPM_TOKEN as a repository secret." >&2
-            exit 1
-          fi
-          {
-            echo "registry=https://registry.npmjs.org/"
-            echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}"
-            echo "always-auth=true"
-          } > "$RUNNER_TEMP/.npmrc"
-          echo "NPM_CONFIG_USERCONFIG=$RUNNER_TEMP/.npmrc" >> "$GITHUB_ENV"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.npm_token }}
-
       - run: npm publish
         if: steps.npm-version.outputs.exists != 'true'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.npm_token }}

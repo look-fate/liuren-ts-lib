@@ -1,14 +1,22 @@
-# This workflow will run tests using Node.js and publish a package to npm when a release is created
+# This workflow will run tests using Node.js and publish a package to npm when package.json changes or a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
 name: Publish Node.js Package
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - package.json
   release:
     types: [created]
 
 permissions:
   contents: read
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
 
 jobs:
   publish-npm:
@@ -27,11 +35,45 @@ jobs:
           registry-url: https://registry.npmjs.org/
           cache: pnpm
 
+      - name: Read package metadata
+        id: package
+        run: |
+          name=$(node -p "require('./package.json').name")
+          version=$(node -p "require('./package.json').version")
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check npm version
+        id: npm-version
+        run: |
+          package="${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}"
+          set +e
+          npm_output=$(npm view "$package" version --registry=https://registry.npmjs.org/ 2>&1)
+          npm_status=$?
+          set -e
+
+          if [ "$npm_status" -eq 0 ]; then
+            echo "$package already exists on npm. Skipping publish."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          elif echo "$npm_output" | grep -q "E404"; then
+            echo "$package does not exist on npm. Publishing is required."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "$npm_output" >&2
+            exit "$npm_status"
+          fi
+
       - run: pnpm install --frozen-lockfile
+        if: steps.npm-version.outputs.exists != 'true'
+
       - run: pnpm test
+        if: steps.npm-version.outputs.exists != 'true'
+
       - run: pnpm build
+        if: steps.npm-version.outputs.exists != 'true'
 
       - name: Configure npm authentication
+        if: steps.npm-version.outputs.exists != 'true'
         run: |
           if [ -z "$NODE_AUTH_TOKEN" ]; then
             echo "Missing npm token. Add NPM_TOKEN as a repository secret." >&2
@@ -47,5 +89,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.npm_token }}
 
       - run: npm publish
+        if: steps.npm-version.outputs.exists != 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.npm_token }}

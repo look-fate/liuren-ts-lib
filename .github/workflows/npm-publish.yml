@@ -1,13 +1,15 @@
-# This workflow will run tests using Node.js and publish a package to npm when package.json changes or a release is created
+# This workflow will run tests using Node.js and publish a package to npm when package.json changes, the workflow changes, or a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
 name: Publish Node.js Package
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
       - package.json
+      - .github/workflows/npm-publish.yml
   release:
     types: [created]
 

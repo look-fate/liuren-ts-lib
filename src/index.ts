@@ -1,6 +1,6 @@
 import sixtyJiaZi from "./maps/sixtyJiaZi";
-import { LiuRenResult, LuNianResult } from "./liuren/type";
-import { getDateByObj, getDateBySiZhu } from "./common/date";
+import { LiuRenResult, LuNianResult, Gender } from "./liuren/type";
+import { getDateByObj, getDateBySiZhu, DateInfo } from "./common/date";
 import { getDunGan, getChuJian, getFuJian } from "./liuren/dunGan";
 import { getJianChu } from "./liuren/jianChu";
 import { fillSanChuan, getSanChuan } from "./liuren/sanChuan";
@@ -22,83 +22,81 @@ export * from "./liuren/yinYangGuiRen";
 export * from "./common/date";
 export * from "./liuren/type";
 
-export const getLiuRenByDate = (time: Date): LiuRenResult => {
-    const date = getDateByObj(time)
-    const riGan = date.bazi.split(" ")[2].substring(0, 1)
-    const tianDiPan = getTianDiPan(date)
-    const siKe = getSiKe(date, tianDiPan)
-    const dunGan = getDunGan(date, tianDiPan)
-    const jianChu = getJianChu(date, tianDiPan)
-    const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
-    const shenSha = getShenSha(date)
-    const yinYangGuiRen = getYinYangGuiRen(date, tianDiPan)
-    const chuJian = getChuJian(date)
-    const fuJian = getFuJian(date)
-    const result: LiuRenResult = {
+// 导出映射工具
+export { DiZhiPinyin, DiZhiToPinyin, PinyinToDiZhi, DiZhiKey } from "./maps/ganZhi";
+
+/**
+ * 核心计算函数（内部使用）
+ */
+const computeLiuRen = (date: DateInfo): LiuRenResult => {
+    const riGan = date.bazi.split(" ")[2].substring(0, 1);
+    const tianDiPan = getTianDiPan(date);
+    const siKe = getSiKe(date, tianDiPan);
+    const dunGan = getDunGan(date, tianDiPan);
+    const jianChu = getJianChu(date, tianDiPan);
+    const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan);
+    const shenSha = getShenSha(date);
+    const yinYangGuiRen = getYinYangGuiRen(date, tianDiPan);
+    const chuJian = getChuJian(date);
+    const fuJian = getFuJian(date);
+
+    return {
         dateInfo: date,
-        tiandipan: tianDiPan,
-        siKe: siKe,
-        dunGan: dunGan,
-        chuJian: chuJian,
-        fuJian: fuJian,
-        jianChu: jianChu,
-        sanChuan: sanChuan,
-        shenSha: shenSha,
-        yinYangGuiRen: yinYangGuiRen
-    }
-    return result
-}
+        tianDiPan,
+        siKe,
+        sanChuan,
+        dunGan,
+        chuJian,
+        fuJian,
+        jianChu,
+        shenSha,
+        yinYangGuiRen
+    };
+};
+
+/**
+ * 使用 Date 对象进行大六壬排盘
+ */
+export const getLiuRenByDate = (date: Date): LiuRenResult => {
+    return computeLiuRen(getDateByObj(date));
+};
+
+/**
+ * 使用四柱干支进行大六壬排盘
+ */
 export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour: string): LiuRenResult => {
-    const date = getDateBySiZhu(year, month, day, hour)
-    const riGan = date.bazi.split(" ")[2].substring(0, 1)
-    const tianDiPan = getTianDiPan(date)
-    const siKe = getSiKe(date, tianDiPan)
-    const dunGan = getDunGan(date, tianDiPan)
-    const jianChu = getJianChu(date, tianDiPan)
-    const sanChuan = fillSanChuan(getSanChuan(siKe, tianDiPan), tianDiPan, dunGan, riGan)
-    const shenSha = getShenSha(date)
-    const yinYangGuiRen = getYinYangGuiRen(date, tianDiPan)
-    const chuJian = getChuJian(date)
-    const fuJian = getFuJian(date)
-    const result: LiuRenResult = {
-        dateInfo: date,
-        tiandipan: tianDiPan,
-        siKe: siKe,
-        dunGan: dunGan,
-        chuJian: chuJian,
-        fuJian: fuJian,
-        jianChu: jianChu,
-        sanChuan: sanChuan,
-        shenSha: shenSha,
-        yinYangGuiRen: yinYangGuiRen
-    }
-    return result
-}
-export const getNianMing = (time: Date, gender: number): LuNianResult => {
-    const date = getDateByObj(time)
-    const year = date.bazi.split(" ")[0]
-    const yearNumber = time.getFullYear()
-    const nowNumber = new Date().getFullYear()
-    const age = nowNumber - yearNumber
-    // gender 1 为男 起丙寅顺排 2 为女 起壬申逆排
-    let luNian = ""
-    const genderString = gender == 1 ? "男" : "女"
-    if (gender == 1) {
-        const startYear = sixtyJiaZi.indexOf("丙寅")
-        const startIndex = (startYear + age)
-        luNian = sixtyJiaZi[startIndex % 60]
+    return computeLiuRen(getDateBySiZhu(year, month, day, hour));
+};
+
+/**
+ * 计算虚岁流年
+ */
+export const getNianMing = (birthDate: Date, gender: Gender): LuNianResult => {
+    const date = getDateByObj(birthDate);
+    const year = date.bazi.split(" ")[0];
+    const yearNumber = birthDate.getFullYear();
+    const nowNumber = new Date().getFullYear();
+    const age = nowNumber - yearNumber;
+
+    let luNian = "";
+    if (gender === "男") {
+        // 男起丙寅顺排
+        const startYear = sixtyJiaZi.indexOf("丙寅");
+        const startIndex = startYear + age;
+        luNian = sixtyJiaZi[startIndex % 60];
     } else {
-        const startYear = sixtyJiaZi.indexOf("壬申")
-        let startIndex = (startYear - age)
+        // 女起壬申逆排
+        const startYear = sixtyJiaZi.indexOf("壬申");
+        let startIndex = startYear - age;
         if (startIndex < 0) {
-            startIndex = 60 + startIndex
+            startIndex = 60 + startIndex;
         }
-        luNian = sixtyJiaZi[startIndex % 60]
+        luNian = sixtyJiaZi[startIndex % 60];
     }
-    const result: LuNianResult = {
-        year: year,
-        gender: genderString,
-        luNian: luNian
-    }
-    return result
-}
+
+    return {
+        year,
+        gender,
+        luNian
+    };
+};

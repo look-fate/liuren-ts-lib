@@ -1,34 +1,24 @@
 import { DateInfo } from "../common/date";
+import { DiZhiKey } from "../maps/ganZhi";
 
+// 十二宫类型（使用拼音键）
 export interface ShiErGong {
-    0: string,
-    1: string,
-    2: string,
-    3: string,
-    4: string,
-    5: string,
-    6: string,
-    7: string,
-    8: string,
-    9: string,
-    10: string,
-    11: string,
+    zi: string;
+    chou: string;
+    yin: string;
+    mao: string;
+    chen: string;
+    si: string;
+    wu: string;
+    wei: string;
+    shen: string;
+    you: string;
+    xu: string;
+    hai: string;
 }
 
-export interface ShiErGongEx {
-    "子": string,
-    "丑": string,
-    "寅": string,
-    "卯": string,
-    "辰": string,
-    "巳": string,
-    "午": string,
-    "未": string,
-    "申": string,
-    "酉": string,
-    "戌": string,
-    "亥": string
-}
+// 性别类型
+export type Gender = "男" | "女";
 
 export interface ShenShaItem {
     name: string;
@@ -39,41 +29,41 @@ export interface ShenShaItem {
 export type ShenSha = ShenShaItem[];
 
 export interface YinYangGuiRen {
-    阳贵人: ShiErGong;  // 阳贵人天将
-    阴贵人: ShiErGong;  // 阴贵人天将
+    yangGuiRen: ShiErGong;  // 阳贵人天将
+    yinGuiRen: ShiErGong;   // 阴贵人天将
 }
 
 export interface TianDiPan {
-    "地盘": ShiErGong,
-    "天盘": ShiErGong,
-    "天将": ShiErGong
+    diPan: ShiErGong;   // 地盘
+    tianPan: ShiErGong; // 天盘
+    tianJiang: ShiErGong; // 天将
 }
 
 export interface SanChuan {
-    "初传": string[],
-    "中传": string[],
-    "末传": string[],
-    "课体": string
+    chuChuan: string[];  // 初传
+    zhongChuan: string[]; // 中传
+    moChuan: string[];   // 末传
+    keTi: string;        // 课体
 }
 
 export interface SiKe {
-    "一课": string[],
-    "二课": string[],
-    "三课": string[],
-    "四课": string[]
+    ke1: string[];  // 一课
+    ke2: string[];  // 二课
+    ke3: string[];  // 三课
+    ke4: string[];  // 四课
 }
 
 export interface LiuRenResult {
-    dateInfo?: DateInfo
-    tiandipan?: TianDiPan
-    siKe?: SiKe
-    sanChuan?: SanChuan
-    dunGan?: ShiErGongEx
-    chuJian?: ShiErGongEx
-    fuJian?: ShiErGongEx
-    jianChu?: ShiErGongEx
-    shenSha?: ShenSha
-    yinYangGuiRen?: YinYangGuiRen
+    dateInfo: DateInfo;
+    tianDiPan: TianDiPan;
+    siKe: SiKe;
+    sanChuan: SanChuan;
+    dunGan: ShiErGong;
+    chuJian: ShiErGong;
+    fuJian: ShiErGong;
+    jianChu: ShiErGong;
+    shenSha: ShenSha;
+    yinYangGuiRen: YinYangGuiRen;
 }
 
 export interface LuNianResult {

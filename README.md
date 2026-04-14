@@ -43,11 +43,12 @@ const result = getLiuRenByDate(new Date());
 console.log(result);
 // 输出包含：
 // - dateInfo: 日期信息（八字、节气等）
-// - tiandipan: 天地盘（地盘、天盘、天将）
-// - siKe: 四课
-// - sanChuan: 三传（初传、中传、末传、课体）
-// - dunGan: 遁干
+// - tianDiPan: 天地盘（diPan, tianPan, tianJiang）
+// - siKe: 四课（ke1, ke2, ke3, ke4）
+// - sanChuan: 三传（chuChuan, zhongChuan, moChuan, keTi）
+// - dunGan/chuJian/fuJian/jianChu: 各种遁干
 // - shenSha: 神煞列表
+// - yinYangGuiRen: 阴阳贵人天将盘
 ```
 
 #### 使用四柱干支
@@ -66,11 +67,10 @@ console.log(result);
 ```typescript
 import { getNianMing } from 'liuren-ts-lib';
 
-// 计算流年，gender: 1 为男，2 为女
+// 计算流年
 const birthDate = new Date('1990-01-01');
-const gender = 1;
 
-const result = getNianMing(birthDate, gender);
+const result = getNianMing(birthDate, "男"); // 或 "女"
 
 console.log(result);
 // 输出包含：
@@ -87,7 +87,7 @@ import { getDateByObj, getDateBySiZhu } from 'liuren-ts-lib';
 // 从 Date 对象获取日期信息
 const dateInfo = getDateByObj(new Date());
 console.log(dateInfo.bazi); // 八字
-console.log(dateInfo.yueJiang); // 月将
+console.log(dateInfo.yuejiang); // 月将
 
 // 从四柱干支获取日期信息
 const dateInfo2 = getDateBySiZhu('甲子', '丙寅', '戊辰', '庚午');
@@ -119,13 +119,13 @@ console.log(dateInfo2.bazi); // 八字
 
 **返回值**: `LiuRenResult` - 包含完整的六壬排盘结果
 
-#### `getNianMing(time: Date, gender: number): LuNianResult`
+#### `getNianMing(birthDate: Date, gender: Gender): LuNianResult`
 
 计算虚岁流年。
 
 **参数**:
-- `time`: Date - 出生日期
-- `gender`: number - 性别（1 为男，2 为女）
+- `birthDate`: Date - 出生日期
+- `gender`: Gender - 性别（`"男"` 或 `"女"`）
 
 **返回值**: `LuNianResult` - 包含流年信息
 
@@ -141,22 +141,43 @@ console.log(dateInfo2.bazi); // 八字
 
 ## 📖 类型定义
 
+### ShiErGong
+
+十二宫类型，使用拼音键名。
+
+```typescript
+interface ShiErGong {
+    zi: string;    // 子
+    chou: string;  // 丑
+    yin: string;   // 寅
+    mao: string;   // 卯
+    chen: string;  // 辰
+    si: string;    // 巳
+    wu: string;    // 午
+    wei: string;   // 未
+    shen: string;  // 申
+    you: string;   // 酉
+    xu: string;    // 戌
+    hai: string;   // 亥
+}
+```
+
 ### LiuRenResult
 
 大六壬排盘结果。
 
 ```typescript
 interface LiuRenResult {
-    dateInfo?: DateInfo;            // 日期信息
-    tiandipan?: TianDiPan;          // 天地盘
-    siKe?: SiKe;                    // 四课
-    sanChuan?: SanChuan;            // 三传
-    dunGan?: ShiErGongEx;           // 遁干
-    chuJian?: ShiErGongEx;          // 初建（日干五子元遁）
-    fuJian?: ShiErGongEx;           // 复建（时干五子元遁）
-    jianChu?: ShiErGongEx;          // 十二建除
-    shenSha?: ShenSha;              // 神煞
-    yinYangGuiRen?: YinYangGuiRen;  // 阴阳贵人天将盘
+    dateInfo: DateInfo;           // 日期信息
+    tianDiPan: TianDiPan;         // 天地盘
+    siKe: SiKe;                   // 四课
+    sanChuan: SanChuan;           // 三传
+    dunGan: ShiErGong;            // 遁干
+    chuJian: ShiErGong;           // 初建（日干五子元遁）
+    fuJian: ShiErGong;            // 复建（时干五子元遁）
+    jianChu: ShiErGong;           // 十二建除
+    shenSha: ShenSha;             // 神煞
+    yinYangGuiRen: YinYangGuiRen; // 阴阳贵人天将盘
 }
 ```
 
@@ -166,9 +187,9 @@ interface LiuRenResult {
 
 ```typescript
 interface TianDiPan {
-    "地盘": ShiErGong;  // 地盘十二宫
-    "天盘": ShiErGong;  // 天盘十二宫
-    "天将": ShiErGong;  // 天将十二宫
+    diPan: ShiErGong;      // 地盘十二宫
+    tianPan: ShiErGong;    // 天盘十二宫
+    tianJiang: ShiErGong;  // 天将十二宫
 }
 ```
 
@@ -178,10 +199,10 @@ interface TianDiPan {
 
 ```typescript
 interface SiKe {
-    "一课": string[];  // 第一课
-    "二课": string[];  // 第二课
-    "三课": string[];  // 第三课
-    "四课": string[];  // 第四课
+    ke1: string[];  // 一课
+    ke2: string[];  // 二课
+    ke3: string[];  // 三课
+    ke4: string[];  // 四课
 }
 ```
 
@@ -191,11 +212,33 @@ interface SiKe {
 
 ```typescript
 interface SanChuan {
-    "初传": string[];  // 初传
-    "中传": string[];  // 中传
-    "末传": string[];  // 末传
-    "课体": string;    // 课体名称
+    chuChuan: string[];   // 初传
+    zhongChuan: string[]; // 中传
+    moChuan: string[];    // 末传
+    keTi: string;         // 课体名称
 }
+```
+
+### YinYangGuiRen
+
+阴阳贵人天将盘。
+
+```typescript
+interface YinYangGuiRen {
+    yangGuiRen: ShiErGong;  // 阳贵人天将
+    yinGuiRen: ShiErGong;   // 阴贵人天将
+}
+```
+
+### 辅助工具
+
+提供中文地支与拼音之间的转换：
+
+```typescript
+import { DiZhiToPinyin, PinyinToDiZhi } from 'liuren-ts-lib';
+
+DiZhiToPinyin["子"]  // => "zi"
+PinyinToDiZhi["zi"]  // => "子"
 ```
 
 ## 🛠️ 开发

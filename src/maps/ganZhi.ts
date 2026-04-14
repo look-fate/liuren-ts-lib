@@ -1,4 +1,24 @@
 export const DiZhiArray = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
+
+// 地支拼音数组（与 DiZhiArray 索引对应）
+export const DiZhiPinyin = ["zi", "chou", "yin", "mao", "chen", "si", "wu", "wei", "shen", "you", "xu", "hai"] as const;
+
+// 地支类型
+export type DiZhiKey = typeof DiZhiPinyin[number];
+
+// 中文地支 → 拼音
+export const DiZhiToPinyin: Record<string, DiZhiKey> = {
+    "子": "zi", "丑": "chou", "寅": "yin", "卯": "mao",
+    "辰": "chen", "巳": "si", "午": "wu", "未": "wei",
+    "申": "shen", "酉": "you", "戌": "xu", "亥": "hai"
+};
+
+// 拼音 → 中文地支
+export const PinyinToDiZhi: Record<DiZhiKey, string> = {
+    "zi": "子", "chou": "丑", "yin": "寅", "mao": "卯",
+    "chen": "辰", "si": "巳", "wu": "午", "wei": "未",
+    "shen": "申", "you": "酉", "xu": "戌", "hai": "亥"
+};
 // 地支六合
 export const LiuHe = {
     "子": "丑",

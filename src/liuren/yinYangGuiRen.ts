@@ -1,21 +1,26 @@
 import { DateInfo } from "../common/date";
 import { ShiErGong, TianDiPan, YinYangGuiRen } from "./type";
 import { ShenJiangArray, ShunNi, YangGui, YinGui } from "../maps/shenJiang";
-import { DiZhiArray } from "../maps/ganZhi";
+import { DiZhiArray, DiZhiPinyin } from "../maps/ganZhi";
+
+// 创建空的十二宫对象
+const createEmptyShiErGong = (): ShiErGong => ({
+    zi: "", chou: "", yin: "", mao: "",
+    chen: "", si: "", wu: "", wei: "",
+    shen: "", you: "", xu: "", hai: ""
+});
 
 /**
  * 根据贵人地支在天盘上排布十二天将
  */
 const arrangeTianJiang = (tianPan: ShiErGong, guiZhi: string): ShiErGong => {
-    const tianJiang: ShiErGong = {
-        0: "", 1: "", 2: "", 3: "", 4: "", 5: "",
-        6: "", 7: "", 8: "", 9: "", 10: "", 11: "",
-    };
+    const tianJiang = createEmptyShiErGong();
 
     // 找贵人在天盘的位置
     let guiIndex = 0;
     for (let i = 0; i < 12; i++) {
-        if (guiZhi === tianPan[i as keyof ShiErGong]) {
+        const key = DiZhiPinyin[i];
+        if (guiZhi === tianPan[key]) {
             guiIndex = i;
             break;
         }
@@ -25,15 +30,10 @@ const arrangeTianJiang = (tianPan: ShiErGong, guiZhi: string): ShiErGong => {
     const shunNi = ShunNi[DiZhiArray[guiIndex] as keyof typeof ShunNi];
 
     for (let i = 0; i < 12; i++) {
-        let index = guiIndex;
-        if (shunNi === "顺") {
-            index = index + i;
-        } else {
-            index = index - i;
-        }
-        if (index > 11) index -= 12;
-        if (index < 0) index += 12;
-        tianJiang[index as keyof ShiErGong] = ShenJiangArray[i];
+        let index = shunNi === "顺" ? guiIndex + i : guiIndex - i;
+        index = ((index % 12) + 12) % 12; // 处理负数
+        const key = DiZhiPinyin[index];
+        tianJiang[key] = ShenJiangArray[i];
     }
 
     return tianJiang;
@@ -44,13 +44,12 @@ const arrangeTianJiang = (tianPan: ShiErGong, guiZhi: string): ShiErGong => {
  */
 export const getYinYangGuiRen = (date: DateInfo, tianDiPan: TianDiPan): YinYangGuiRen => {
     const riGan = date.bazi.split(" ")[2].substring(0, 1);
-    const tianPan = tianDiPan.天盘;
 
     const yangGuiZhi = YangGui[riGan as keyof typeof YangGui];
     const yinGuiZhi = YinGui[riGan as keyof typeof YinGui];
 
     return {
-        阳贵人: arrangeTianJiang(tianPan, yangGuiZhi),
-        阴贵人: arrangeTianJiang(tianPan, yinGuiZhi),
+        yangGuiRen: arrangeTianJiang(tianDiPan.tianPan, yangGuiZhi),
+        yinGuiRen: arrangeTianJiang(tianDiPan.tianPan, yinGuiZhi),
     };
 };

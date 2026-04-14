@@ -1,69 +1,72 @@
-import { JiGong } from "../maps/jiGong"
-import { LiuQin, Relation, WuXing } from "../maps/wuXing"
-import { SanChuan, ShiErGong, ShiErGongEx, SiKe, TianDiPan } from "./type"
-import { zeiKe } from "./jiuZongMen/zeiKe"
-import { DiZhiArray, GanZhiYinYang, LiuChong, SanHeFaYong, SanXingYong, TianGanWuHe } from "../maps/ganZhi"
-import { getShangShen, getTianJiang, getXiaShen } from "./siKe"
-import { YiMa } from "../maps/ma"
-import  sanChuanData  from "../sanchuan.json"
+import { JiGong } from "../maps/jiGong";
+import { LiuQin, Relation, WuXing } from "../maps/wuXing";
+import { SanChuan, ShiErGong, SiKe, TianDiPan } from "./type";
+import { zeiKe } from "./jiuZongMen/zeiKe";
+import { DiZhiArray, DiZhiToPinyin, GanZhiYinYang, LiuChong, SanHeFaYong, SanXingYong, TianGanWuHe } from "../maps/ganZhi";
+import { getShangShen, getTianJiang, getXiaShen } from "./siKe";
+import { YiMa } from "../maps/ma";
+import sanChuanData from "../sanchuan.json";
 
-export const getSanChuan = (siKe: SiKe, tiandipan: TianDiPan): SanChuan => {
+export const getSanChuan = (siKe: SiKe, tianDiPan: TianDiPan): SanChuan => {
     let sanChuan: SanChuan = {
-        "初传": [],
-        "中传": [],
-        "末传": [],
-        "课体": ""
-    }
+        chuChuan: [],
+        zhongChuan: [],
+        moChuan: [],
+        keTi: ""
+    };
     // 读取四课
-    const ke1_shang = siKe.一课[0][0]
+    const ke1_shang = siKe.ke1[0][0];
     // 课1下为干 转为寄宫
-    const ke1_xia = siKe.一课[0][1]
-    const riGan = ke1_xia
-    const riJi = JiGong[ke1_xia as keyof typeof JiGong]
-    const ke2_shang = siKe.二课[0][0]
-    const ke2_xia = siKe.二课[0][1]
-    const ke3_shang = siKe.三课[0][0]
-    const ke3_xia = siKe.三课[0][1]
-    const ke4_shang = siKe.四课[0][0]
-    const ke4_xia = siKe.四课[0][1]
+    const ke1_xia = siKe.ke1[0][1];
+    const riGan = ke1_xia;
+    const riJi = JiGong[ke1_xia as keyof typeof JiGong];
+    const ke2_shang = siKe.ke2[0][0];
+    const ke2_xia = siKe.ke2[0][1];
+    const ke3_shang = siKe.ke3[0][0];
+    const ke3_xia = siKe.ke3[0][1];
+    const ke4_shang = siKe.ke4[0][0];
+    const ke4_xia = siKe.ke4[0][1];
 
-    const siKeArray = []
-    siKeArray.push(ke1_shang + ke1_xia)
-    siKeArray.push(ke2_shang + ke2_xia)
-    siKeArray.push(ke3_shang + ke3_xia)
-    siKeArray.push(ke4_shang + ke4_xia)
+    const siKeArray = [];
+    siKeArray.push(ke1_shang + ke1_xia);
+    siKeArray.push(ke2_shang + ke2_xia);
+    siKeArray.push(ke3_shang + ke3_xia);
+    siKeArray.push(ke4_shang + ke4_xia);
 
-    const day = riGan + ke3_xia
-    const index = DiZhiArray.indexOf(ke1_shang)
-    const ganZhi = sanChuanData[day as keyof typeof sanChuanData][index].干支组合
-    sanChuan.课体 = sanChuanData[day as keyof typeof sanChuanData][index].格局
-    sanChuan.初传 = [ganZhi.substring(0, 1), "", "", ""]
-    sanChuan.中传 = [ganZhi.substring(1, 2), "", "", ""]
-    sanChuan.末传 = [ganZhi.substring(2, 3), "", "", ""]
-    return sanChuan
-}
-// "辛",  "龙",  "财",  "丑"
-export const fillSanChuan = (sanChuan: SanChuan, tiandipan: TianDiPan, dunGan: ShiErGongEx, riGan: string) => {
-    const chu = sanChuan.初传[0]
+    const day = riGan + ke3_xia;
+    const index = DiZhiArray.indexOf(ke1_shang);
+    const ganZhi = sanChuanData[day as keyof typeof sanChuanData][index].干支组合;
+    sanChuan.keTi = sanChuanData[day as keyof typeof sanChuanData][index].格局;
+    sanChuan.chuChuan = [ganZhi.substring(0, 1), "", "", ""];
+    sanChuan.zhongChuan = [ganZhi.substring(1, 2), "", "", ""];
+    sanChuan.moChuan = [ganZhi.substring(2, 3), "", "", ""];
+    return sanChuan;
+};
 
-    let tianJiang = getTianJiang(tiandipan, chu)
-    let relation = getLiuQin(riGan, chu)
-    let dun = dunGan[chu as keyof typeof dunGan]
-    sanChuan.初传 = [chu, tianJiang, relation, dun]
+// 填充三传的天将、六亲、遁干
+export const fillSanChuan = (sanChuan: SanChuan, tianDiPan: TianDiPan, dunGan: ShiErGong, riGan: string): SanChuan => {
+    const chu = sanChuan.chuChuan[0];
+    const chuKey = DiZhiToPinyin[chu];
+    let tianJiang = getTianJiang(tianDiPan, chu);
+    let relation = getLiuQin(riGan, chu);
+    let dun = dunGan[chuKey];
+    sanChuan.chuChuan = [chu, tianJiang, relation, dun];
 
-    const zhong = sanChuan.中传[0]
-    tianJiang = getTianJiang(tiandipan, zhong)
-    relation = getLiuQin(riGan, zhong)
-    dun = dunGan[zhong as keyof typeof dunGan]
-    sanChuan.中传 = [zhong, tianJiang, relation, dun]
+    const zhong = sanChuan.zhongChuan[0];
+    const zhongKey = DiZhiToPinyin[zhong];
+    tianJiang = getTianJiang(tianDiPan, zhong);
+    relation = getLiuQin(riGan, zhong);
+    dun = dunGan[zhongKey];
+    sanChuan.zhongChuan = [zhong, tianJiang, relation, dun];
 
-    const mo = sanChuan.末传[0]
-    tianJiang = getTianJiang(tiandipan, mo)
-    relation = getLiuQin(riGan, mo)
-    dun = dunGan[mo as keyof typeof dunGan]
-    sanChuan.末传 = [mo, tianJiang, relation, dun]
-    return sanChuan
-}
+    const mo = sanChuan.moChuan[0];
+    const moKey = DiZhiToPinyin[mo];
+    tianJiang = getTianJiang(tianDiPan, mo);
+    relation = getLiuQin(riGan, mo);
+    dun = dunGan[moKey];
+    sanChuan.moChuan = [mo, tianJiang, relation, dun];
+    return sanChuan;
+};
 export const getGanZhi2WuXing = (ganZhi: string) => {
     let result = ""
     for (let i = 0; i < ganZhi.length; i++) {

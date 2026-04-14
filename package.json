@@ -2,9 +2,10 @@
   "name": "liuren-ts-lib",
   "version": "2.0.0",
   "author": "Coaixy <coaixy@outlook.com>",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "description": "LiuRen TypeScript Library Made by LookFate",
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -33,11 +34,11 @@
     "build": "node build.mjs && tsc --emitDeclarationOnly --outDir dist/types",
     "dev": "tsc -w",
     "start": "pnpm build && node --enable-source-maps dist/cjs/index.js",
-    "test": "jest",
+    "test": "jest --watchman=false",
     "ts": "tsx src/index.ts",
     "lint": "eslint src/**/*.ts",
     "fix": "eslint src/**/*.ts --fix",
-    "prepare": "pnpm build"
+    "prepare": "npm run build"
   },
   "exports": {
     ".": {

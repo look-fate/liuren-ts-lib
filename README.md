@@ -119,6 +119,18 @@ console.log(dateInfo2.bazi); // 八字
 
 **返回值**: `LiuRenResult` - 包含完整的六壬排盘结果
 
+#### `getLiuRenByYueJiang(yueJiang: string, shiChen: string, riGanZhi: string, yueLing?: string): LiuRenResult`
+
+使用古籍直接记载的月将、占时和日干支进行排盘，不反解或猜测公历年代。
+
+**参数**:
+- `yueJiang`: string - 月将地支，如 "亥"
+- `shiChen`: string - 占时地支，如 "未"
+- `riGanZhi`: string - 日干支，如 "丁巳"
+- `yueLing`: string | undefined - 可选月令地支，用于精确计算天马；省略时从月将的六合位反推
+
+**返回值**: `LiuRenResult` - 包含完整的六壬排盘结果，其中未知年月柱表示为 `-- --`
+
 #### `getNianMing(birthDate: Date, gender: Gender): LuNianResult`
 
 计算虚岁流年。
@@ -138,6 +150,10 @@ console.log(dateInfo2.bazi); // 八字
 ##### `getDateBySiZhu(year: string, month: string, day: string, hour: string): DateInfo`
 
 将四柱干支转换为 DateInfo 对象。
+
+##### `getDateByYueJiang(yueJiang: string, shiChen: string, riGanZhi: string, yueLing?: string): DateInfo`
+
+根据月将、占时和日干支直接构造 DateInfo；不依赖公历日期。
 
 ## 📖 类型定义
 
@@ -309,4 +325,4 @@ pnpm fix
 
 ---
 
-由 [www.lookfate.com](https://www.lookfate.com/) 提供的 技术支持。 
+由 [www.lookfate.com](https://www.lookfate.com/) 提供的 技术支持。

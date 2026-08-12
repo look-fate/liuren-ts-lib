@@ -1,6 +1,6 @@
 import sixtyJiaZi from "./maps/sixtyJiaZi";
 import { LiuRenResult, LuNianResult, Gender } from "./liuren/type";
-import { getDateByObj, getDateBySiZhu, DateInfo } from "./common/date";
+import { getDateByObj, getDateBySiZhu, getDateByYueJiang, DateInfo } from "./common/date";
 import { getDunGan, getChuJian, getFuJian } from "./liuren/dunGan";
 import { getJianChu } from "./liuren/jianChu";
 import { fillSanChuan, getSanChuan } from "./liuren/sanChuan";
@@ -23,7 +23,8 @@ export * from "./common/date";
 export * from "./liuren/type";
 
 // 导出映射工具
-export { DiZhiPinyin, DiZhiToPinyin, PinyinToDiZhi, DiZhiKey } from "./maps/ganZhi";
+export { DiZhiPinyin, DiZhiToPinyin, PinyinToDiZhi } from "./maps/ganZhi";
+export type { DiZhiKey } from "./maps/ganZhi";
 
 /**
  * 核心计算函数（内部使用）
@@ -66,6 +67,18 @@ export const getLiuRenByDate = (date: Date): LiuRenResult => {
  */
 export const getLiuRenBySiZhu = (year: string, month: string, day: string, hour: string): LiuRenResult => {
     return computeLiuRen(getDateBySiZhu(year, month, day, hour));
+};
+
+/**
+ * 使用古籍记载的月将、占时和日干支进行大六壬排盘
+ */
+export const getLiuRenByYueJiang = (
+    yueJiang: string,
+    shiChen: string,
+    riGanZhi: string,
+    yueLing?: string
+): LiuRenResult => {
+    return computeLiuRen(getDateByYueJiang(yueJiang, shiChen, riGanZhi, yueLing));
 };
 
 /**

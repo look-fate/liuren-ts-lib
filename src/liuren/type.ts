@@ -43,7 +43,7 @@ export interface SanChuan {
     chuChuan: string[];  // 初传
     zhongChuan: string[]; // 中传
     moChuan: string[];   // 末传
-    keTi: string;        // 课体
+    keTi: string;        // 课体（九宗门，三传成三合局/俱土时追加课格，如"元首·润下"）
 }
 
 export interface SiKe {

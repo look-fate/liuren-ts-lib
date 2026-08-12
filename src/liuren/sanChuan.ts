@@ -7,6 +7,34 @@ import { getShangShen, getTianJiang, getXiaShen } from "./siKe";
 import { YiMa } from "../maps/ma";
 import sanChuanData from "../sanchuan.json";
 
+// 三合局课格：三传三支构成三合局（土无三合，另以稼穑课格处理）
+const SanHeJuGe = {
+    "申子辰": "润下", // 水局：江湖之水，占晴雨主雨雪
+    "寅午戌": "炎上", // 火局
+    "巳酉丑": "从革", // 金局
+    "亥卯未": "曲直", // 木局
+} as const;
+// 稼穑课格：三传俱土
+const TuZhi = ["辰", "戌", "丑", "未"];
+
+/**
+ * 判定三传的三合局课格（润下/炎上/从革/曲直）或稼穑（三传俱土），不成局返回空串
+ */
+export const getSanHeGe = (chuChuan: string, zhongChuan: string, moChuan: string): string => {
+    const sorted = [chuChuan, zhongChuan, moChuan].sort().join("");
+    for (const [ju, ge] of Object.entries(SanHeJuGe)) {
+        // 三合局三支互异，排序后比对即可判等
+        if ([...ju].sort().join("") === sorted) {
+            return ge;
+        }
+    }
+    // 三传皆在土支 → 稼穑
+    if ([chuChuan, zhongChuan, moChuan].every((z) => TuZhi.includes(z))) {
+        return "稼穑";
+    }
+    return "";
+};
+
 export const getSanChuan = (siKe: SiKe, tianDiPan: TianDiPan): SanChuan => {
     let sanChuan: SanChuan = {
         chuChuan: [],
@@ -37,6 +65,11 @@ export const getSanChuan = (siKe: SiKe, tianDiPan: TianDiPan): SanChuan => {
     const index = DiZhiArray.indexOf(ke1_shang);
     const ganZhi = sanChuanData[day as keyof typeof sanChuanData][index].干支组合;
     sanChuan.keTi = sanChuanData[day as keyof typeof sanChuanData][index].格局;
+    // 九宗门之外，追加三合局课格（如"元首·润下"），不成局则保持九宗门名
+    const sanHeGe = getSanHeGe(ganZhi.substring(0, 1), ganZhi.substring(1, 2), ganZhi.substring(2, 3));
+    if (sanHeGe) {
+        sanChuan.keTi = `${sanChuan.keTi}·${sanHeGe}`;
+    }
     sanChuan.chuChuan = [ganZhi.substring(0, 1), "", "", ""];
     sanChuan.zhongChuan = [ganZhi.substring(1, 2), "", "", ""];
     sanChuan.moChuan = [ganZhi.substring(2, 3), "", "", ""];
